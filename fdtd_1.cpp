@@ -40,8 +40,7 @@ void leftquartercircle2(int, int, double);
 FILE *model_xy;
 FILE *model_yz;
 FILE *model_xz;
-
-
+char *dir_name[] = {"1550"};
 
 
 #define INT_DIV(X,Y)   ((int)((X)/(Y)))
@@ -245,15 +244,8 @@ void file_open(char* dir_name_def){
 void file_close(){
 
 	fclose(model_xy);
-	fclose(model_xy2);
 	fclose(model_yz);
 	fclose(model_xz);
-
-	fclose(fpepsilonx);
-	fclose(fpepsilony);
-	fclose(fpepsilonz);
-	fclose(fpepsilony2);
-	fclose(fpepsilonz2);
 
 }
 
@@ -1164,10 +1156,11 @@ void calc_poynting_powerHz() // 透過スペクトル計算用の観測面中央
 void output_field_write(char *dir_name_def){
     FILE *EXY2;
     char  fname3[40];
-    z = 20;
+    int z = 20;
     sprintf(fname3, "/Field_E_XY_%d_%d.txt", n, irank);
     EXY2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
-
+    double E_xy;
+    int x, y;
     for(int x = 0; y < xmax; x++){
       for(int y = 0; z < ymax; y++){
         E_xy = Hz[x][y][z];
@@ -1180,12 +1173,15 @@ void output_field_write(char *dir_name_def){
 
 
 void output_field(char *dir_name_def){
+  int n;
   if(n = Nmax){
 			output_field_write (dir_name_def);
 	}
 }
 
 void output_model(){
+  int x, y, z;
+
   if(irank == IRANK_MIN){
   for(x = 0; x < xmax; x++){
     for(y = 0; y < ymax; y++){
@@ -1220,7 +1216,7 @@ void main_calc(int wave, int left, int right)
 
     MPI_Status status;
     int tag_send = 0, tag_recv = 0;
-
+    int dir_count = 0;
     initialize_matrix(); 						// 配列の初期化
     modeling(); 								// モデルの設定
     file_open(dir_name[dir_count]); 			// ファイルを開く
