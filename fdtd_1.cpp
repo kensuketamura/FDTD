@@ -1162,8 +1162,8 @@ void output_field_write(char *dir_name_def){
     sprintf(fname3, "/Field_E_XY_%d_%d.txt", n, irank);
     EXY2 = fopen(strcat(strcpy(dir_name[0], dir_name_def), fname3), "w");
     double E_xy;
-    for(int x = 0; y < xmax; x++){
-      for(int y = 0; z < ymax; y++){
+    for(int x = 0; x < xmax; x++){
+      for(int y = 0; y < ymax; y++){
         E_xy = Hz[x][y][z];
         fprintf(EXY2, "%e¥t", E_xy);
       }
