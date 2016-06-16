@@ -1174,7 +1174,7 @@ void output_field_write(char *dir_name_def){
 
 
 void output_field(char *dir_name_def){
-  if(n = Nmax){
+  if(n == Nmax){
 			output_field_write (dir_name_def);
 	}
 }
