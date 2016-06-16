@@ -79,6 +79,7 @@ static int irank = 0;
 
 static int xmax, ymax, zmax;
 //#define ymax YMAX
+int n;
 //#define zmax ZMAX
 
 #define CELL_SIZE 100  // セルサイズ[nm]
@@ -326,7 +327,7 @@ void modeling()
 
 	int n_temp; 		//屈折率の値保存用
 	double epsilon_temp; 		//誘電率の値保存用
-
+  int x,y,z;
 	/****************************** スラブの形成 ******************************/
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < YMAX; y++){
@@ -1156,13 +1157,13 @@ void calc_poynting_powerHz() // 透過スペクトル計算用の観測面中央
 void output_field_write(char *dir_name_def){
     FILE *EXY2;
     char  fname3[40];
+    int x, y;
     int z = 20;
     sprintf(fname3, "/Field_E_XY_%d_%d.txt", n, irank);
     EXY2 = fopen(strcat(strcpy(dir_name[0], dir_name_def), fname3), "w");
     double E_xy;
-    int x, y;
-    for(int x = 0; y < xmax; x++){
-      for(int y = 0; z < ymax; y++){
+    for(int x = 0; x < xmax; x++){
+      for(int y = 0; y < ymax; y++){
         E_xy = Hz[x][y][z];
         fprintf(EXY2, "%e¥t", E_xy);
       }
@@ -1173,8 +1174,7 @@ void output_field_write(char *dir_name_def){
 
 
 void output_field(char *dir_name_def){
-  int n;
-  if(n = Nmax){
+  if(n == Nmax){
 			output_field_write (dir_name_def);
 	}
 }
