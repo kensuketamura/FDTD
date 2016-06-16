@@ -1158,7 +1158,7 @@ void output_field_write(char *dir_name_def){
     char  fname3[40];
     int z = 20;
     sprintf(fname3, "/Field_E_XY_%d_%d.txt", n, irank);
-    EXY2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
+    EXY2 = fopen(strcat(strcpy(dir_name[0], dir_name_def), fname3), "w");
     double E_xy;
     int x, y;
     for(int x = 0; y < xmax; x++){
