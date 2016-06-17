@@ -56,7 +56,7 @@ static void _strtime(char *buf)
 }
 
 /* MPI global parameter */
-#define NODE 2
+#define NODE 4
 #define IRANK_MIN 0				// 最小値(この数字の割り当てられた計算機に結果が入る)
 static int IRANK_MAX = NODE-1;
 static int irank = 0;
@@ -66,12 +66,12 @@ static int irank = 0;
 
 #define XMAX_ALL    100
 #define XMAX (INT_DIV(XMAX_ALL, NODE) + 1)
-#define YMAX        50
+#define YMAX        20
 //#define ZMAX        50
 #define RX(x)       ((irank * XMAX) + x)
 
 #define dt       (28e-18) 		// 時間ステップ[s]
-#define Nmax     (300) 		// 最終時間ステップ
+#define Nmax     (10) 		// 最終時間ステップ
 
 #define Ncut 500 			// 時間ステップ数を表示させる間隔
 #define Tcut 200 			// エネルギーの平均の算出を開始する時間ステップ
