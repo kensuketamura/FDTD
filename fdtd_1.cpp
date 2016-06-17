@@ -1229,10 +1229,12 @@ void main_calc(int wave, int left, int right)
         s_time = MPI_Wtime();
     }
 
+    if (n == 1){
     // 電磁界計算
     //    observation_func(); 	// 観測点の設定
         output_model(); 		// モデルの出力
     //    set_epsilon(); 			// 誘電率の割り当て
+    }
 
     for(int n = 1 ; n <= Nmax; n++){
 
