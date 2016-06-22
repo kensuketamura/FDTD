@@ -9,17 +9,11 @@
 /*****************************************************************************/
 // —ãUŠÖ”
 /*****************************************************************************/
-//char *dir_name[] = {"1550", "1580"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
-//char *dir_name[] = {"1550"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
-//char *dir_name[] = {"1555", "1560", "1570", "1575"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
 double lambda; 											// —ãUŠÖ”‚Ì”g’· [m] (ƒvƒƒOƒ‰ƒ€’†‚Å dir_name ‚ğdouble‰»‚µ‚Ä‘ã“ü)
 double omega0; 											// —ãUŠÖ”‚ÌŠpü”g” [s^-1]
 
 // ƒKƒEƒVƒAƒ“ƒpƒ‹ƒX
 double sigma; 											// L‚ª‚è•‚ğŒˆ’è‚·‚é’è”
-//static const double delta_omega = 0.1; 						// ’†Sü”g”‚Å‹KŠi‚µ‚½”¼’l‘S•
-//static const int Npeak = 3000; 								// ƒs[ƒNƒXƒeƒbƒv”
-
 
 /*****************************************************************************/
 // Model‘|‚«o‚µ—p‚Ì’è”
@@ -28,8 +22,8 @@ double sigma; 											// L‚ª‚è•‚ğŒˆ’è‚·‚é’è”
 #define CORE 1									// ƒRƒA
 #define GaInAsP	2								// GaInAsP
 #define AIR_GaInAsP	3							// CLAD/GaInAsP
-#define EXITATION 30							// —ãU“_//ƒ‚ƒfƒ‹ã‚¾‚Æ31
-#define OBSERVATION 20							// ŠÏ‘ª“_//ƒ‚ƒfƒ‹ã‚¾‚Æ21
+#define EXITATION 30							// —ãU“_
+#define OBSERVATION 20							// ŠÏ‘ª“_
 #define CIRCLE_REF_INDEX	CLAD				//ŠÖ”mcircle‚Å‘‚«‚Ş”š
 #define CIRCLE_REF_INDEX2	CLAD		//ŠÖ”mcircle2‚Å‘‚«‚Ş”š
 #define CIRCLE_REF_INDEX3	2				//êŠŠm”F—pƒhƒbƒg‚ÌFw’è
@@ -68,58 +62,38 @@ int cell[XMAX][YMAX+1][ZMAX+1];							// ÀÛ‚Ícell[XMAX][YMAX][ZMAX]‚Å—Ç‚¢‚ªCƒ
 double epsilon_xy[XMAX+1][YMAX+1], epsilon_yz[YMAX+1][ZMAX+1], epsilon_zx[XMAX+1][ZMAX+1]; 
 double epsilon_zx2[XMAX+1][ZMAX+1]; 
 int cell_xy[XMAX][YMAX], cell_yz[YMAX][ZMAX]; 
-int cell_zx[ZMAX][XMAX];//™16/1/6
 
 
 /*‹zû‹«ŠEğŒ“K—p‚Ì‚Æ‚«‚Ég‚¤“dŠE‚Ì”z—ñ*/
 double Exn2y00[XMAX+1][ZMAX+1], 	Exn1y00[XMAX+1][ZMAX+1+1], 	Exn2y01[XMAX+1][ZMAX+1], 	Exn1y01[XMAX+1][ZMAX+1+1]; 
-//double exn2ym1[XMAX+1][ZMAX+1], 	exn1ym1[XMAX+1][ZMAX+1+1], 	exn2ym0[XMAX+1][ZMAX+1], 	exn1ym0[XMAX+1][ZMAX+1+1]; 
 double Exn2z00[XMAX+1][YMAX+1], 	Exn1z00[XMAX+1][YMAX+1+1], 	Exn2z01[XMAX+1][YMAX+1], 	Exn1z01[XMAX+1][YMAX+1+1]; 
-//double exn2zm1[XMAX+1][YMAX+1], 	exn1zm1[XMAX+1][YMAX+1+1], 	exn2zm0[XMAX+1][YMAX+1], 	exn1zm0[XMAX+1][YMAX+1+1]; 
+
 
 double Eyn2z00[XMAX+1][YMAX], 	Eyn1z00[XMAX+1][YMAX+1], 	Eyn2z01[XMAX+1][YMAX], 	Eyn1z01[XMAX+1][YMAX+1]; 
-//double eyn2zm1[XMAX+1][YMAX], 	eyn1zm1[XMAX+1][YMAX+1], 	eyn2zm0[XMAX+1][YMAX], 	eyn1zm0[XMAX+1][YMAX+1]; 
 double Eyn2x00[YMAX][ZMAX+1], 	Eyn1x00[YMAX+1][ZMAX+1+1], 	Eyn2x01[YMAX][ZMAX+1], 	Eyn1x01[YMAX+1][ZMAX+1+1]; 
 double Eyn2xm1[YMAX][ZMAX+1], 	Eyn1xm1[YMAX+1][ZMAX+1+1], 	Eyn2xm0[YMAX][ZMAX+1], 	Eyn1xm0[YMAX+1][ZMAX+1+1]; 
 
 double Ezn2y00[XMAX+1][ZMAX], 	Ezn1y00[XMAX+1][ZMAX+1], 	Ezn2y01[XMAX+1][ZMAX], 	Ezn1y01[XMAX+1][ZMAX+1]; 
-//double ezn2ym1[XMAX+1][ZMAX], 	ezn1ym1[XMAX+1][ZMAX+1], 	ezn2ym0[XMAX+1][ZMAX], 	ezn1ym0[XMAX+1][ZMAX+1]; 
 double Ezn2x00[YMAX+1][ZMAX], 	Ezn1x00[YMAX+1+1][ZMAX+1], 	Ezn2x01[YMAX+1][ZMAX], 	Ezn1x01[YMAX+1+1][ZMAX+1]; 
 double Ezn2xm1[YMAX+1][ZMAX], 	Ezn1xm1[YMAX+1+1][ZMAX+1], 	Ezn2xm0[YMAX+1][ZMAX], 	Ezn1xm0[YMAX+1+1][ZMAX+1]; 
 
 // ¥ŠE•ª•zo—Í—p
 double field_xy[XMAX][YMAX]; 	// Hz-field ‚Ìƒtƒ@ƒCƒ‹o—Í (–Ê‚’¼•ûŒü‚Ì¥ŠE¬•ª)
 double field_yz[YMAX][ZMAX];	// Hz-field ‚Ìƒtƒ@ƒCƒ‹o—Í (–Ê•ûŒü‚Ì¥ŠE¬•ª)
-double field_zx_Hz[ZMAX][XMAX];	// Hy-field ‚Ìƒtƒ@ƒCƒ‹o—Í (–Ê•ûŒü‚Ì¥ŠE¬•ª)
-double field_zx_Hy[ZMAX][XMAX];	// Hy-field ‚Ìƒtƒ@ƒCƒ‹o—Í (–Ê•ûŒü‚Ì¥ŠE¬•ª)
 
 int x, y, z; 				// —£UÀ•W
 int xmax, ymax, zmax; 			// ‹óŠÔ•ªŠ„‚ÌÅ‘å’l
 int xmax_all, ymax_all, zmax_all; //•ªŠ„‘O‚ÌÅ‘å’l
-//int n, Nmax; 				//n: ŠÔƒXƒeƒbƒvCNmax: ŠÔƒXƒeƒbƒv‚ÌÅ‘å’l
 int n; 					//ŠÔƒXƒeƒbƒv”
-//int icut, jcut, kcut; 		//icut, jcut, kcut: ƒtƒB[ƒ‹ƒho—Í‚Ì‚Æ‚«‚Ég‚¤
-//int PrintStat; 
-//int PrintEnd; 
-//int source_i1, source_i2; 
-//int source_j1, source_j2; 
-//int source_k; 
 int x_cen, y_cen, z_cen; 			//x_cen, y_cen, z_cen: ‰ğÍ‹óŠÔ‚Ì’†S—£UÀ•W
 int x_model_cen, y_model_cen; 	//x_model_cen, y_model_cen:ƒ‚ƒfƒ‹‚Ì’†S—£UÀ•W
-//char fname[30]; 
 int irank, isize; 
 
 // “d¥ŠEŒvZ‚Ég‚¤’è”‚ÌéŒ¾
-//double dex, dey, dez; 				//“dŠE‚ÌŒvZ‚Ég‚¤·•ª’l	dex: Ex, dey: Ey, dez: Ez
-//double cnstEx, cnstEy, cnstEz; 	//“dŠE‚ÌŒvZ‚Ég‚¤’è”		
-//double dhx, dhy, dhz; 				//¥ŠE‚ÌŒvZ‚Ég‚¤·•ª’l	dhx: Hx, dhy: Hy, dhz: Hz
 static const double cnstHxyz = dt / MU0; 					//¥ŠE‚ÌŒvZ‚Ég‚¤’è”		cnstHxyz: Magnetic field calculation
 
 
 ///*—ãU—p’è”‚ÌéŒ¾*/
-//double omega0; 	//omega0: —ãUŠÖ”‚ÌŠpü”g”
-//double sigma; 	//ƒKƒEƒVƒAƒ“ƒpƒ‹ƒX‚Ì‚½‚ß‚ÌL‚ª‚è•‚ğŒˆ’è‚·‚é’è”
-//int Npeak; 		//ƒKƒEƒVƒAƒ“ƒpƒ‹ƒX‚Ìƒs[ƒNƒXƒeƒbƒv”
 
 /*ƒ‚ƒfƒ‹İ’è‚Ég‚¤’è”‚ÌéŒ¾ -- ŠÖ”modeling()ˆÈŠO‚Å‚àg‚¤’è”‚ª‚ ‚é‚Ì‚Å‚±‚±‚ÅéŒ¾‚·‚éD*/
 double b; //ƒfƒBƒXƒNŒú‚³
@@ -129,43 +103,7 @@ double w; 		//x’Œ•‚Ì”¼•ª
 int wij; 		//x’Œ•‚Ì”¼•ª‚Ì—£U’l
 double h; 		//x’Œ‚Ì‚‚³
 int hk; 			//x’Œ‚Ì‚‚³‚Ì—£U’l
-//double np; 		//x’Œ‚Ì‹üÜ—¦
-/*
-#define CLAD 0
-#define AlGaAs3 1
-#define AlGaAs8 2
-#define GaAs 3
-#define AlAs 4
-#define AlOxAs 5
 
-double htslab; 		//ƒXƒ‰ƒu‚ÌŒú‚³‚Ì”¼•ª
-int ihtslab; 		//ƒXƒ‰ƒu‚ÌŒú‚³‚Ì”¼•ª‚Ì—£U’l
-double rhole; 		//‰~E‚Ì”¼Œa
-int irhole; 			//‰~E”¼Œa‚Ì—£U’l
-double hphole; 		//‰~E”z—ñƒsƒbƒ`‚Ì”¼•ª
-int ihphole; 		//‰~E”z—ñƒsƒbƒ`‚Ì”¼•ª‚Ì—£U’l
-double hpholev; 		//‰~E”z—ñƒsƒbƒ`‚Ì”¼•ª‚Ìã3”{
-int ihpholev; 		//‰~E”z—ñƒsƒbƒ`‚Ì”¼•ª‚Ìã3”{‚Ì—£U’l
-*/
-//“üo—Íƒpƒ[‚ÌÅ‘å’l‚ÆÅ¬’l‚ğ‹L˜^‚·‚é•Ï”
-double powermax_in; 
-double powermin_in; 
-double powermax_out; 
-double powermin_out; 
-
-//double n_core; 		//Šˆ«‘w‹üÜ—¦
-//double n_clad; 		//ƒNƒ‰ƒbƒh‘w‹üÜ—¦
-double topy1, topy5, tohz1, tohz5; 
-double topy1h, topy5h, tohz1h, tohz5h; 
-//double epsilon1; 
-//double epsilon2; 
-
-void mcircle(int, int , int, int);  //make circle function
-void halfcircle(int, int , int, int); 							//make circle function
-void rightquartercircle1(int, int, int, int, double); 
-void leftquartercircle1(int, int, int, int, double); 
-void rightquartercircle2(int, int, int, int, double); 
-void leftquartercircle2(int, int, int, int, double); 
 
 /////////////////////////////////////////////////////
 /*ŠÏ‘ª“_*/
@@ -173,64 +111,15 @@ int inputi, inputj, inputk;
 int outputi, outputj, outputk; 
 double pyn_in, pyn_out; 
 
-/*WGƒ`ƒƒ[ƒv\‘¢*/
-#define WG_chirp_gradient 1
-#define WG_chirp_gradient2 0.5
-#define WG_chirp_gradient3 0.08 //BOUNDARYLINE == 9‚Åg—p
-#define WG_chirp_gradient4 0.04 //BOUNDARYLINE == 10‚Åg—p
-#define WG_chirp_gradient5 0.015 //BOUNDARYLINE == 14‚Åg—p
-#define WG_chirp_gradient6 0.020 //BOUNDARYLINE == 15‚Åg—p
-#define WG_chirp_gradient7 0.030 //BOUNDARYLINE == 16‚Åg—p
-#define WG_chirp_gradient8 0.020 //BOUNDARYLINE == 17‚Åg—p
-#define WG_chirp_gradient9 0.012 //BOUNDARYLINE == 18‚Åg—p
-#define WG_chirp_gradient10 0.010 //BOUNDARYLINE == 19‚Åg—p
-#define WG_chirp_gradient11 0.008 //BOUNDARYLINE == 20‚Åg—p
-#define WG_chirp_gradient12 0.012 //BOUNDARYLINE == 22‚Åg—p
-#define WG_chirp_gradient13 0.016 //BOUNDARYLINE == 23‚Åg—p
-#define WG_chirp_gradient14 0.020 //BOUNDARYLINE == 24‚Åg—p
-#define WG_chirp_gradient15 0.024 //BOUNDARYLINE == 25‚Åg—p 1/7
-#define WG_chirp_gradient16 0.004 //BOUNDARYLINE == 26‚Åg—p 1/7
-#define WG_chirp_gradient17 0.002 //BOUNDARYLINE == 27‚Åg—p 1/7
-
-
-#define WG_chirp_off_in_x  187
-#define WG_chirp_off_in_x2  187-16
-#define WG_chirp_off_in_x21  291 // 1/4
-#define WG_chirp_off_in_x33  316
-
-#define WG_chirp_off_in_x_2  0 //BOUNDARYLINE == 9‚Åg—p
-
-
-#define WG_chirp_off_out_x 800+1 //‚±‚ê‚Åƒe[ƒp‚ªs‚«‰ß‚¬‚È‚¢‚æ‚¤‚É§ŒÀ
-#define WG_chirp_off_out_x2 800+1+16
-#define WG_chirp_off_out_x9 788+200 //BOUNDARYLINE == 14‚Åg—p
-#define WG_chirp_off_out_x18 788+200+42 //BOUNDARYLINE == 18‚Åg—p
-#define WG_chirp_off_out_x19 788+200+63 //BOUNDARYLINE == 19‚Åg—p
-#define WG_chirp_off_out_x20 788+200+84 //BOUNDARYLINE == 20‚Åg—p
-#define WG_chirp_off_out_x21 788+200+84 //BOUNDARYLINE == 21‚Åg—p
-
-#define WG_chirp_off_out_y 75.5+3+40+16
-#define WG_chirp_off_out_y9 75.5+3+40+16+1  //BOUNDARYLINE == 9‚Åg—p
-#define WG_chirp_off_out_y15 75.5+3+40+16+1  //BOUNDARYLINE == 15‚Åg—p
-#define WG_chirp_off_out_y16 75.5+3+40+16  //BOUNDARYLINE == 16‚Åg—p
-#define WG_chirp_off_out_y17 75.5+3+40+16+1  //BOUNDARYLINE == 17‚Åg—p
-#define WG_chirp_off_out_y18 75.5+3+40+16+1 //BOUNDARYLINE == 18‚Åg—p
-#define WG_chirp_off_out_y19 75.5+3+40+16+1  //BOUNDARYLINE == 19‚Åg—p
-#define WG_chirp_off_out_y20 75.5+3+40+16+1-10  //BOUNDARYLINE == 20‚Åg—p
-#define WG_chirp_off_out_y21 75.5+3+40+16+1  //BOUNDARYLINE == 21‚Åg—p
-
-
 
 /*ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^éŒ¾*/
 //ƒ‚ƒfƒ‹			//Ez				//Hz
 FILE *model_xy; 		FILE *fpfez_xy; 		FILE *fpfhz_xy; 
 FILE *model_yz; 		FILE *fpfez_yz; 		FILE *fpfhz_yz; 
-FILE *model_xz; 		FILE *fpfez_zx; 		FILE *fpfhz_zx;//™ 
-FILE *model_xy2; 	FILE *fpfez2_xy; 	FILE *fpfhz2_xy; 
+FILE *model_xz; 		FILE *fpfez_zx; 		FILE *fpfhz_zx; 
+FILE *fpfez2_xy; 	FILE *fpfhz2_xy; 
 FILE *allmodel_xy; 	 
-FILE *allmodel_yz1, *allmodel_yz4, *allmodel_yz7;
-FILE *allmodel_zx1, *allmodel_zx4, *allmodel_zx7; //™16/1/6 
-FILE *allmodel_zx; //™16/1/6 
+
 
 //—U“d—¦
 FILE *fpepsilonx; 
@@ -246,65 +135,11 @@ FILE *fpEpsilon;
 FILE *fpex; 		FILE *fphx; 
 FILE *fpey; 		FILE *fphy; 
 FILE *fpez; 		FILE *fphz; 
-/*	FILE *fpez1; 	FILE *fphz1; 
-FILE *fpez2; 	FILE *fphz2; 
-FILE *fpez3; 	FILE *fphz3; 
-FILE *fpez4; 	FILE *fphz4; 
-FILE *fpez5; 	FILE *fphz5; 
-FILE *fpez6; 	FILE *fphz6; 
-*/
 
-//	FILE *fpfhr_xy; 	FILE *fpfhth_xy; 	FILE *fpfer_xy; 		FILE *fpfeth_xy; 	FILE *fpfethhz_xy; 
-//	FILE *fpfhr_yz; 	FILE *fpfhth_yz; 	FILE *fpfer_yz; 		FILE *fpfeth_yz; 	FILE *fpfethhz_yz; 
-//	FILE *fpfhr_zx; 	FILE *fpfhth_zx; 	FILE *fpfer_zx; 		FILE *fpfeth_zx; 	FILE *fpfethhz_zx; 
-//	FILE *fpfhr2_xy; FILE *fpfhth2_xy; 	FILE *fpfer2_xy; 	FILE *fpfeth2_xy; 	FILE *fpfethhz2_xy; 
-
-//	FILE *fphr1; 	FILE *fphth1; 		FILE *fper1; 		FILE *fpeth1; 
-//	FILE *fphr2; 	FILE *fphth2; 		FILE *fper2; 		FILE *fpeth2; 
-//	FILE *fphr3; 	FILE *fphth3; 		FILE *fper3; 		FILE *fpeth3; 
-//	FILE *fphr4; 	FILE *fphth4; 		FILE *fper4; 		FILE *fpeth4; 
-//	FILE *fphr5; 	FILE *fphth5; 		FILE *fper5; 		FILE *fpeth5; 
-//	FILE *fphr6; 	FILE *fphth6; 		FILE *fper6; 		FILE *fpeth6; 
 
 FILE *fpparameter; 	//ŒvZƒpƒ‰ƒ[ƒ^•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt_para; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[Ex*Hy, Ey*HxŠe¬•ª•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt1; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt2; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt3; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt4; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt5; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt6; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt1h; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt2h; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt3h; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt4h; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt5h; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppoynt6h; 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fppowerHz1; 		//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz2; 		//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz3; 		//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz4; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz5; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz6; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz1h; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz2h; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz3h; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz4h; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz5h; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fppowerHz6h; 	//’f–Ê‘S‘ÌHz•Û‘¶—p
-FILE *fpHz1; 		// “üËŠÏ‘ª–ÊHz•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *fpHz5; 		// oËŠÏ‘ª–ÊHz•Û‘¶ƒtƒ@ƒCƒ‹
-FILE *avpoynt1; 	
-FILE *avpoynt5; 
-FILE *avhz1; 	
-FILE *avhz5; 	
-FILE *avpoynt1h; 	
-FILE *avpoynt5h; 
-FILE *avhz1h; 	
-FILE *avhz5h; 	
-//	FILE *fpenergy; 		FILE *fppower; 
-//	FILE *fpenergye; 	FILE *fppowerv; 
-//	FILE *fpenergyh; 	FILE *fppowerp; 
+	
+
 
 #elif _CALCULATION_TYPE == _BAND_CALCULATION
 
