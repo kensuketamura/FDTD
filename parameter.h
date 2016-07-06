@@ -2,7 +2,7 @@
 // 並列計算時の計算機の台数
 /*****************************************************************************/
 #if _FDTD
-#define NODE 48
+#define NODE 1
 #else
 #define NODE 1
 #endif
@@ -22,16 +22,16 @@
 
 
 /****************************** 3列目格子シフト構造 ******************************/
-#define CELL_SIZE 15			// セルサイズ
-#define PITCH 405				// PC 格子定数
-#define PITCH_SHIFT_MAX 405 //480		// 格子定数変化PCWのPC格子定数の最大値
+#define CELL_SIZE 21			// セルサイズ
+#define PITCH 399				// PC 格子定数
+#define PITCH_SHIFT_MAX 399 //480		// 格子定数変化PCWのPC格子定数の最大値
 
 #define SLAB_HEIGHT 210		// スラブ厚
 #define CLAD_HEIGHT1 525	// 上部クラッド高さ
 #define CLAD_HEIGHT2 0		// 下部クラッド高さ
 #define AIR_HEIGHT 0		// 空気層高さ
 
-//#define RADIUS 120			// PCの標準円孔半径
+#define RADIUS 120			// PCの標準円孔半径
 //#define SX3 80				// 伝搬(X)方向の3列目格子シフト量(SX2,SX4=0でないと使えない要改善!!mainの1380行目)
 //#define SX1 0				// 伝搬(X)方向の1列目格子シフト量
 //#define SX2 0				// 伝搬(X)方向の2列目格子シフト量(SX3,SX4=0でないと使えない要改善!!mainの1380行目)
@@ -49,7 +49,7 @@
 #define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
 #define PCW_WIDTH_CHIRP 180				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
 
-// これ以下は周期数
+// これ以下は周期数	
 //#define NORM_PCW_PER 0				// 通常PCW周期数
 //#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数． 2~4列目まで対応．※シフト量/周期数<cellsizeだとチャープしない
 //#define CHIRP_2ND_LS_PER 0			//導波路幅チャープとシフト量チャープを同時に行う際のチャープLSPCW周期数．PITCH_SHIFT_PERより小さくないとダメ?　2,3列目のみ対応．※シフト量/周期数<cellsizeだとチャープしない
@@ -63,12 +63,12 @@
 #define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// 通常PCW長
 #define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
 #define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW長
-#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// 出射細線導波路のスラブ終端の長さ
+#define WIRE_OUTPUT_OFFSET_PER (WIRE_OUTPUT_OFFSET, CELL_SIZE)	// 出射細線導波路のスラブ終端の長さ
 
 #define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
 #define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// 出射観測面の中心座標 (モデルの右端からの距離)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長 
 #define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// 出射細線長
 
 /****************************** 3列目格子シフト構造 ******************************/
@@ -76,7 +76,7 @@
 /*****************************************************************************/
 // 全解析領域
 /*****************************************************************************/
-#define XMAX_ALL 1342	// SiO2 1340
+#define XMAX_ALL 200	// SiO2 1340
 #define YMAX_ALL 163	//163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
 #define ZMAX_ALL 42		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 
@@ -84,13 +84,13 @@
 /*****************************************************************************/
 // セルサイズ [m]
 /*****************************************************************************/
-static const double dblCellSize = CELL_SIZE * 1e-9;
-static const double dx = dblCellSize;
-static const double dy = dblCellSize;
-static const double dz = dblCellSize;
-static const double inv_dx = 1/dx;
-static const double inv_dy = 1/dy;
-static const double inv_dz = 1/dz;
+static const double dblCellSize = CELL_SIZE * 1e-9; 
+static const double dx = dblCellSize; 
+static const double dy = dblCellSize; 
+static const double dz = dblCellSize; 
+static const double inv_dx = 1/dx; 
+static const double inv_dy = 1/dy; 
+static const double inv_dz = 1/dz; 
 
 /*****************************************************************************/
 // 時間ステップ (クーラントの安定条件などに注意)
@@ -99,7 +99,7 @@ static const double inv_dz = 1/dz;
 
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 2.8e-17; 			// 時間ステップ[s]
-static const int Nmax = 1000; 				// 最終時間ステップ
+static const int Nmax = 100; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 
 static const int Ncut = 50000; 				// 時間ステップ数を表示させる間隔
@@ -138,6 +138,24 @@ static const int	air_hc = 0; 					//クラッド上部空気層厚
 static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer; 			//活性層中心セル(+1は[intSlabHeigPer]が奇数セル数のときに中央値にするため)
 
 /*****************************************************************************/
+// フォトニック結晶導波路
+/*****************************************************************************/
+static const double dblPitchCellComp = dblCellSize/2.0; 			// 格子定数の丸め
+static const double dblPitch = PITCH * 1e-9; 					// 円孔格子定数
+
+static const double dblRadius = RADIUS * 1e-9; 					// 円孔半径
+static const double dblDiamter = 2.0 * dblRadius; 				// 円孔直径
+
+static const int intPitchX = INT_DIV (PITCH, CELL_SIZE); 		// 格子定数のセルサイズ(X方向)
+static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0)/2 + 0.5), CELL_SIZE)); 		// 格子定数のセルサイズ(Y方向)	+0.5は四捨五入のため
+static const int intRadius = INT_DIV (RADIUS, CELL_SIZE); 		// 円孔半径
+
+static const int Row_x = 10;
+static const int Row_y = 9;
+static const int Wid = 10;
+
+
+/*****************************************************************************/
 // 材料の屈折率と誘電率
 /*****************************************************************************/
 static const double nw = 4.5; //量子井戸層の屈折率
@@ -159,12 +177,12 @@ static const double epsilon2 = EPSILON0 * SQ(n_clad); 		// クラッドの誘電率
 /*****************************************************************************/
 #if _FDTD
 #if _EXITATION_FUNC
-char *dir_name[] = {"1560"}; 		// 励振関数の波長 [nm]
+char *dir_name[] = {"1550"}; 		// 励振関数の波長 [nm]
 #else
-char *dir_name[] = {"1560"}; 		// 励振関数の波長 [nm]
+char *dir_name[] = {"1550"}; 		// 励振関数の波長 [nm]
 #endif
 #else
-char *dir_name[] = {"1560"}; 		// 励振関数の波長 [nm]
+char *dir_name[] = {"1550"}; 		// 励振関数の波長 [nm]
 #endif
 
 static const double delta_omega = 0.05; 						// 中心周波数で規格した半値全幅

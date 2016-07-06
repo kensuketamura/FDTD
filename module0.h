@@ -126,8 +126,8 @@ FILE *fpepsilonx;
 FILE *fpallepsilonx; 
 FILE *fpepsilony; 
 FILE *fpepsilonz; 
-FILE *fpepsilony2; 
-FILE *fpepsilonz2; 
+//FILE *fpepsilony2; 
+//FILE *fpepsilonz2; 
 FILE *fpAllEpsilon; 
 FILE *fpEpsilon; 
 
