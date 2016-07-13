@@ -76,7 +76,7 @@
 /*****************************************************************************/
 // 全解析領域
 /*****************************************************************************/
-#define XMAX_ALL 1200	// SiO2 1340
+#define XMAX_ALL 480	// SiO2 1340
 #define YMAX_ALL 163	//163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
 #define ZMAX_ALL 42		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 
@@ -99,7 +99,7 @@ static const double inv_dz = 1/dz;
 
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 2.8e-17; 			// 時間ステップ[s]
-static const int Nmax = 500000; 				// 最終時間ステップ
+static const int Nmax = 300000; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 
 static const int Ncut = 50000; 				// 時間ステップ数を表示させる間隔
