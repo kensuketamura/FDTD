@@ -31,7 +31,7 @@
 #define CLAD_HEIGHT2 0		// 下部クラッド高さ
 #define AIR_HEIGHT 0		// 空気層高さ
 
-#define RADIUS 120			// PCの標準円孔半径
+#define RADIUS 105			// PCの標準円孔半径
 //#define SX3 80				// 伝搬(X)方向の3列目格子シフト量(SX2,SX4=0でないと使えない要改善!!mainの1380行目)
 //#define SX1 0				// 伝搬(X)方向の1列目格子シフト量
 //#define SX2 0				// 伝搬(X)方向の2列目格子シフト量(SX3,SX4=0でないと使えない要改善!!mainの1380行目)
