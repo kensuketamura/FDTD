@@ -2,7 +2,7 @@
 // 並列計算時の計算機の台数
 /*****************************************************************************/
 #if _FDTD
-#define NODE 48
+#define NODE 1
 #else
 #define NODE 1
 #endif
@@ -49,7 +49,7 @@
 #define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
 #define PCW_WIDTH_CHIRP 180				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
 
-// これ以下は周期数
+// これ以下は周期数	
 //#define NORM_PCW_PER 0				// 通常PCW周期数
 //#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数． 2~4列目まで対応．※シフト量/周期数<cellsizeだとチャープしない
 //#define CHIRP_2ND_LS_PER 0			//導波路幅チャープとシフト量チャープを同時に行う際のチャープLSPCW周期数．PITCH_SHIFT_PERより小さくないとダメ?　2,3列目のみ対応．※シフト量/周期数<cellsizeだとチャープしない
@@ -68,7 +68,7 @@
 #define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
 #define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// 出射観測面の中心座標 (モデルの右端からの距離)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長 
 #define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// 出射細線長
 
 /****************************** 3列目格子シフト構造 ******************************/
@@ -76,7 +76,7 @@
 /*****************************************************************************/
 // 全解析領域
 /*****************************************************************************/
-#define XMAX_ALL 480	// SiO2 1340
+#define XMAX_ALL 38*2	// SiO2 1340
 #define YMAX_ALL 163	//163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
 #define ZMAX_ALL 42		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 
@@ -84,13 +84,13 @@
 /*****************************************************************************/
 // セルサイズ [m]
 /*****************************************************************************/
-static const double dblCellSize = CELL_SIZE * 1e-9;
-static const double dx = dblCellSize;
-static const double dy = dblCellSize;
-static const double dz = dblCellSize;
-static const double inv_dx = 1/dx;
-static const double inv_dy = 1/dy;
-static const double inv_dz = 1/dz;
+static const double dblCellSize = CELL_SIZE * 1e-9; 
+static const double dx = dblCellSize; 
+static const double dy = dblCellSize; 
+static const double dz = dblCellSize; 
+static const double inv_dx = 1/dx; 
+static const double inv_dy = 1/dy; 
+static const double inv_dz = 1/dz; 
 
 /*****************************************************************************/
 // 時間ステップ (クーラントの安定条件などに注意)
@@ -99,7 +99,7 @@ static const double inv_dz = 1/dz;
 
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 2.8e-17; 			// 時間ステップ[s]
-static const int Nmax = 300000; 				// 最終時間ステップ
+static const int Nmax = 100000; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 
 static const int Ncut = 50000; 				// 時間ステップ数を表示させる間隔
@@ -152,7 +152,7 @@ static const int intRadius = INT_DIV (RADIUS, CELL_SIZE); 		// 円孔半径
 
 //static const int Row_x = 12;
 static const int Row_y = 9;
-static const int Wid = 10;
+static const int Wid = 15;
 
 
 /*****************************************************************************/
